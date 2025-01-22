@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    CapsuleCollider cd;
+    Rigidbody rb;
+
+    [SerializeField] public float GroundMovementSpeed = 5f;
+    [SerializeField] public float WaterMovementSpeed = 2.5f;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        Debug.Log("DeepGauge is the best");
-        Debug.Log("Stephen get back to work!");
+        cd = GetComponent<CapsuleCollider>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
