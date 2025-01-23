@@ -270,8 +270,8 @@ MonoBehaviour:
   _VertexGridResolution: 3.7
   _VertexWobbleMode: 0
   _UseRetroVertexLighting: 1
-  _RetroLightingNormalFactor: 0
-  _RetroLightFalloffStart: 0
+  _RetroLightingNormalFactor: 0.636
+  _RetroLightFalloffStart: 0.67
   _FlatShadingMode: 0
   _TriangleSortMode: 0
   _DepthDebugView: 0
@@ -930,8 +930,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1497522492866902602, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
+      propertyPath: speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497522492866902602, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
       propertyPath: BuoyancyForce
       value: 1111
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497522492866902602, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
+      propertyPath: rotationSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1497522492866902602, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
       propertyPath: MaxBuoyancyForce
@@ -1003,7 +1011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4132827875723866080, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
       propertyPath: m_Constraints
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8982829971095311149, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
       propertyPath: m_Name

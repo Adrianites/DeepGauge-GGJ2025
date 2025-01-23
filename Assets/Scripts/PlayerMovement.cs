@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f; // Movement speed
+    public float speed = 10f; // Movement speed
+    public float verticalSpeed = 6f; // Vertical movement speed
     public float buoyancy = 10f; // Buoyancy force
     public float waterLevel = 0f; // Y position of the water surface
-    public float rotationSpeed = 5f; // Rotation speed
+    public float rotationSpeed = 15f; // Rotation speed
     public float maxLookAngle = 80f; // Maximum angle the player can look up or down
 
     private Vector3 moveDirection;
@@ -55,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 transformedDirection = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.z));
 
         // Apply movement with Rigidbody
-        rb.velocity = new Vector3(transformedDirection.x, moveDirection.y * speed, transformedDirection.z) * speed;
+        rb.velocity = new Vector3(transformedDirection.x * speed, moveDirection.y * verticalSpeed, transformedDirection.z * speed);
 
         // Apply buoyancy force if below water level
         if (transform.position.y < waterLevel)
