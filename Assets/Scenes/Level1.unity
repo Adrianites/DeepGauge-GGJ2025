@@ -838,6 +838,10 @@ PrefabInstance:
       propertyPath: WaterSurfaceLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3302879014529741337, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3948701389600114603, guid: 468ded339a1937a4a84ac822faab821a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -55.3
