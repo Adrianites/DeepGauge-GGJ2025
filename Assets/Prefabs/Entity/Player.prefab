@@ -134,6 +134,10 @@ MonoBehaviour:
   PostProcessVolume: {fileID: 0}
   ShallowPP: {fileID: 11400000, guid: c504e6d885df1c14ba6530bd2b74f8ac, type: 2}
   DeepPP: {fileID: 11400000, guid: 9dd7359fe1c97124ba8531ff4a2bed06, type: 2}
+  ShallowFogEndDistance: 25
+  ShallowFogColor: {r: 0.050980393, g: 0.050980393, b: 0.12156863, a: 1}
+  DeepFogEndDistance: 50
+  DeepFogColor: {r: 0.09019608, g: 0.33333334, b: 0.5294118, a: 1}
 --- !u!1 &8982829971095311149
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +151,7 @@ GameObject:
   - component: {fileID: 3761727320121464739}
   - component: {fileID: 4132827875723866080}
   - component: {fileID: 2999434799539832048}
+  - component: {fileID: 6652813214455135639}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -253,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 7d3aff91a57f5f74995ea226e4bb4355, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -264,9 +269,57 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce7625c2-5fef-46cd-99d0-29dabcaaaed6
+    m_ActionName: Ground/Move[/Keyboard/space,/Keyboard/leftShift,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cc6a39f9-a10c-4c2f-a6fc-892e504c437c
+    m_ActionName: Ground/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f08ac0aa-0ffd-444a-a961-919a0214af20
+    m_ActionName: Ground/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 95e5074c-e263-48b4-b945-cd96aff10a1e
+    m_ActionName: Underwater/Movement[/Keyboard/space,/Keyboard/leftShift,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bdea1f9e-000e-4eea-bea5-b47cfafd05f8
+    m_ActionName: Underwater/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6652813214455135639}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f1db6f11-a56d-4ded-9846-844a86f1e63a
+    m_ActionName: Underwater/Interact[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: eee6f107-a553-490f-8329-0b3d6e286c54
+  m_DefaultActionMap: Underwater
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6652813214455135639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982829971095311149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79132da62b7c7ca46a99ecd9484da3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
