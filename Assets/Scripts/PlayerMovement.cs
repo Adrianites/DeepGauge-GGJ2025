@@ -3,12 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 10f; // Movement speed
+    public float speed = 8f; // Movement speed
     public float verticalSpeed = 6f; // Vertical movement speed
-    public float buoyancy = 10f; // Buoyancy force
+    public float buoyancy = 15f; // Buoyancy force
     public float waterLevel = 0f; // Y position of the water surface
     public float rotationSpeed = 15f; // Rotation speed
-    public float maxLookAngle = 80f; // Maximum angle the player can look up or down
+    public float maxLookAngle = 90f; // Maximum angle the player can look up or down
+    public float buoyancyPeriod = 10f; // Period of the buoyancy oscillation
+    public float buoyancyStrength = 3f; // Strength of the buoyancy force
 
     private Vector3 moveDirection;
     private Vector2 lookDirection;
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float pitch = 0f; // Up and down rotation
     private float yaw = 0f; // Left and right rotation
+    private float buoyancyTime = 0f; // Time tracker for buoyancy oscillation
 
     private void Awake()
     {
@@ -61,7 +64,13 @@ public class PlayerMovement : MonoBehaviour
         // Apply buoyancy force if below water level
         if (transform.position.y < waterLevel)
         {
-            rb.AddForce(Vector3.up * buoyancy, ForceMode.Acceleration);
+            buoyancyTime += Time.fixedDeltaTime;
+            float buoyancyForce = Mathf.Sin(buoyancyTime * (2 * Mathf.PI / buoyancyPeriod)) * buoyancy * buoyancyStrength;
+            rb.AddForce(Vector3.up * buoyancyForce, ForceMode.Acceleration);
+        }
+        else
+        {
+            buoyancyTime = 0f; // Reset buoyancy time when above water level
         }
 
         // Read look input (Vector2)
