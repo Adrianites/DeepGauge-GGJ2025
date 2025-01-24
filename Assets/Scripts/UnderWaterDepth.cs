@@ -4,7 +4,8 @@ using UnityEngine.Rendering.PostProcessing;
 public class UnderWaterDepth : MonoBehaviour
 {
     [Header("Depth Parameters")]
-    [SerializeField] private Transform PlayerCamera;
+    [SerializeField] private Transform CameraTransform;
+        [SerializeField] private Camera CameraObj;
     [SerializeField] private float Depth;
     [SerializeField] private PostProcessVolume PostProcessVolume;
 
@@ -20,7 +21,7 @@ public class UnderWaterDepth : MonoBehaviour
 
     private void Update()
     {
-        float t = Mathf.InverseLerp(Depth, Depth - -10f, PlayerCamera.position.y);
+        float t = Mathf.InverseLerp(Depth, Depth - -10f, CameraTransform.position.y);
         BlendEffects(t);
     }
 
@@ -28,6 +29,7 @@ public class UnderWaterDepth : MonoBehaviour
     {
         RenderSettings.fogEndDistance = Mathf.Lerp(ShallowFogEndDistance, DeepFogEndDistance, t);
         RenderSettings.fogColor = Color.Lerp(ShallowFogColor, DeepFogColor, t);
+        CameraObj.backgroundColor = Color.Lerp(ShallowFogColor, DeepFogColor, t);
         PostProcessVolume.profile = t > 0.5f ? DeepPP : ShallowPP;
     }
 }

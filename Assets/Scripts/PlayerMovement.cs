@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 8f; // Movement speed
-    public float verticalSpeed = 6f; // Vertical movement speed
-    public float buoyancy = 15f; // Buoyancy force
-    public float waterLevel = 0f; // Y position of the water surface
-    public float rotationSpeed = 15f; // Rotation speed
-    public float maxLookAngle = 90f; // Maximum angle the player can look up or down
-    public float buoyancyPeriod = 10f; // Period of the buoyancy oscillation
-    public float buoyancyStrength = 3f; // Strength of the buoyancy force
+    public float speed = 8f; 
+    public float verticalSpeed = 6f; 
+    public float buoyancy = 15f; 
+    public float waterLevel = 0f; 
+    public float rotationSpeed = 15f; 
+    public float maxLookAngle = 90f; 
+    public float buoyancyPeriod = 10f; 
+    public float buoyancyStrength = 3f; 
 
     private Vector3 moveDirection;
     private Vector2 lookDirection;
@@ -20,28 +20,25 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction lookAction;
 
-    private float pitch = 0f; // Up and down rotation
-    private float yaw = 0f; // Left and right rotation
-    private float buoyancyTime = 0f; // Time tracker for buoyancy oscillation
+    private float pitch = 0f; 
+    private float yaw = 0f; 
+    private float buoyancyTime = 0f; 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        moveAction = playerInput.actions["Movement"];  // Read from "3D Vector"
-        lookAction = playerInput.actions["Look"];  // Read from "2D Vector"
+        moveAction = playerInput.actions["Movement"];  
+        lookAction = playerInput.actions["Look"];  
 
-        // Lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void FixedUpdate()
     {
-        // Read movement input (Vector3)
         moveDirection = moveAction.ReadValue<Vector3>();
 
-        // Check for vertical movement (up and down)
         if (Keyboard.current.spaceKey.isPressed)
         {
             moveDirection.y = 1;
@@ -55,13 +52,11 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y = 0;
         }
 
-        // Transform movement direction to be relative to the player's rotation
+
         Vector3 transformedDirection = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.z));
 
-        // Apply movement with Rigidbody
         rb.velocity = new Vector3(transformedDirection.x * speed, moveDirection.y * verticalSpeed, transformedDirection.z * speed);
 
-        // Apply buoyancy force if below water level
         if (transform.position.y < waterLevel)
         {
             buoyancyTime += Time.fixedDeltaTime;
@@ -70,18 +65,15 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            buoyancyTime = 0f; // Reset buoyancy time when above water level
+            buoyancyTime = 0f;
         }
 
-        // Read look input (Vector2)
         lookDirection = lookAction.ReadValue<Vector2>();
 
-        // Update yaw and pitch based on look input
         yaw += lookDirection.x * rotationSpeed * Time.fixedDeltaTime;
         pitch -= lookDirection.y * rotationSpeed * Time.fixedDeltaTime;
         pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
-        // Apply rotation to the player
         rb.rotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 }
