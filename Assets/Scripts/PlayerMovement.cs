@@ -5,12 +5,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 8f; 
     public float verticalSpeed = 6f; 
-    public float buoyancy = 15f; 
-    public float waterLevel = 0f; 
+    public float buoyancyStrength = 3f; 
+    public float buoyancyPeriod = 10f; 
     public float rotationSpeed = 15f; 
     public float maxLookAngle = 90f; 
-    public float buoyancyPeriod = 10f; 
-    public float buoyancyStrength = 3f; 
 
     private Vector3 moveDirection;
     private Vector2 lookDirection;
@@ -37,8 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Read movement input (Vector3)
         moveDirection = moveAction.ReadValue<Vector3>();
 
+        // Check for vertical movement (up and down)
         if (Keyboard.current.spaceKey.isPressed)
         {
             moveDirection.y = 1;
@@ -52,28 +52,37 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y = 0;
         }
 
-
+        // Transform movement direction to be relative to the player's rotation
         Vector3 transformedDirection = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.z));
 
+        // Apply movement with Rigidbody
         rb.velocity = new Vector3(transformedDirection.x * speed, moveDirection.y * verticalSpeed, transformedDirection.z * speed);
 
-        if (transform.position.y < waterLevel)
-        {
-            buoyancyTime += Time.fixedDeltaTime;
-            float buoyancyForce = Mathf.Sin(buoyancyTime * (2 * Mathf.PI / buoyancyPeriod)) * buoyancy * buoyancyStrength;
-            rb.AddForce(Vector3.up * buoyancyForce, ForceMode.Acceleration);
-        }
-        else
-        {
-            buoyancyTime = 0f;
-        }
+        // Apply buoyancy force
+        buoyancyTime += Time.fixedDeltaTime;
+        float buoyancyForce = Mathf.Sin(buoyancyTime * (2 * Mathf.PI / buoyancyPeriod)) * buoyancyStrength;
+        rb.AddForce(Vector3.up * buoyancyForce, ForceMode.Acceleration);
 
+        // Read look input (Vector2)
         lookDirection = lookAction.ReadValue<Vector2>();
 
+        // Update yaw and pitch based on look input
         yaw += lookDirection.x * rotationSpeed * Time.fixedDeltaTime;
         pitch -= lookDirection.y * rotationSpeed * Time.fixedDeltaTime;
         pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
+        // Apply rotation to the player
         rb.rotation = Quaternion.Euler(pitch, yaw, 0f);
+
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Items item = other.GetComponent<Items>();
+        if (item != null && !item.isPickedUp)
+        {
+            item.PickUp();
+        }
     }
 }
