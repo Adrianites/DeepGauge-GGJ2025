@@ -129,7 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753e5dd4cb66d044892e6e1ea7bb95de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCamera: {fileID: 338189450514068981}
+  CameraTransform: {fileID: 0}
+  CameraObj: {fileID: 0}
   Depth: 0
   PostProcessVolume: {fileID: 0}
   ShallowPP: {fileID: 11400000, guid: c504e6d885df1c14ba6530bd2b74f8ac, type: 2}
@@ -154,7 +155,7 @@ GameObject:
   - component: {fileID: 6652813214455135639}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,7 +280,19 @@ MonoBehaviour:
     m_ActionId: cc6a39f9-a10c-4c2f-a6fc-892e504c437c
     m_ActionName: Ground/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6652813214455135639}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f08ac0aa-0ffd-444a-a961-919a0214af20
     m_ActionName: Ground/Interact[/Keyboard/f]
   - m_PersistentCalls:
@@ -306,9 +319,41 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f1db6f11-a56d-4ded-9846-844a86f1e63a
     m_ActionName: Underwater/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 657badd3-111f-4629-a0a4-3f0fe7ec09c2
+    m_ActionName: Ground/EscapeKey[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c026ed9f-6cdb-463b-9315-0872568a684b
+    m_ActionName: Underwater/EscapeKey[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Underwater
+  m_DefaultActionMap: Ground
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &6652813214455135639

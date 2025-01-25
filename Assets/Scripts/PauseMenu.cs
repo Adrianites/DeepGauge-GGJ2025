@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private InputAction escapeKey;
-
     public bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject InGameUI;
@@ -58,5 +55,10 @@ public class PauseMenu : MonoBehaviour
     public void MainMenuButton()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Escapelulululululuulluluullul()
+    {
+        
     }
 }

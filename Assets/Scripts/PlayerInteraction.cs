@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
 {
     private Valve currentValve;
+    public SceneSwitcher sceneSwitcher;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,6 +13,10 @@ public class PlayerInteraction : MonoBehaviour
             currentValve = other.GetComponent<Valve>();
             currentValve.SetPlayer(transform);
         }
+        else if (sceneSwitcher)
+        {
+            sceneSwitcher.SwitchScene();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -19,6 +24,10 @@ public class PlayerInteraction : MonoBehaviour
         if (other.CompareTag("Valve"))
         {
             currentValve = null;
+        }
+        else if (sceneSwitcher)
+        {
+            sceneSwitcher.SwitchScene();
         }
     }
 

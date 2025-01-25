@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568792739005640056}
   - component: {fileID: 7507153067102341417}
-  - component: {fileID: 4527358047437011431}
+  - component: {fileID: 5859562287631342783}
   m_Layer: 0
   m_Name: Scene Switcher
   m_TagString: Untagged
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 1
---- !u!65 &4527358047437011431
-BoxCollider:
+--- !u!136 &5859562287631342783
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -64,6 +64,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
