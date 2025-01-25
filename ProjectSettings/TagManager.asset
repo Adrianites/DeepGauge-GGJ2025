@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Valve
+  - InGameUI
+  - PauseMenuUI
   layers:
   - Default
   - TransparentFX
