@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: 
-  groupID: 0
+  groupID: 1
   isPickedUp: 0
 --- !u!65 &-4882194631812097901
 BoxCollider:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: 
-  groupID: 0
+  groupID: 1
   isPickedUp: 0
 --- !u!82 &340444351116640336
 AudioSource:

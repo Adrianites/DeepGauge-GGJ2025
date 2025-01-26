@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Clam_GR
-  groupID: 0
+  groupID: 4
   isPickedUp: 0
 --- !u!65 &-3153352278667418183
 BoxCollider:

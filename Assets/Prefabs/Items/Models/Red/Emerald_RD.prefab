@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a25a41483715784a87ccf02d99ce4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
-  groupID: 0
+  itemName: Emerald_RD
+  groupID: 4
   isPickedUp: 0
 --- !u!82 &1354981871477942930
 AudioSource:

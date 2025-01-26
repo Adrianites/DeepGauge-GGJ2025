@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Dim_GR
-  groupID: 1
+  groupID: 2
   isPickedUp: 0
 --- !u!65 &3183476301459215324
 BoxCollider:

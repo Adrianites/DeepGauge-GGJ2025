@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Moneky_GR
-  groupID: 0
+  groupID: 2
   isPickedUp: 0
 --- !u!65 &8162138312980604140
 BoxCollider:

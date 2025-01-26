@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Monkey_BL
-  groupID: 2
+  groupID: 1
   isPickedUp: 0
 --- !u!65 &-5446394920681539965
 BoxCollider:
