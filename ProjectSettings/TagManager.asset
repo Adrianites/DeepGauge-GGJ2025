@@ -9,6 +9,10 @@ TagManager:
   - PauseMenuUI
   - SceneSwitcher
   - Items
+  - O2Bar
+  - Score
+  - DeathUI
+  - Bubbles
   layers:
   - Default
   - TransparentFX

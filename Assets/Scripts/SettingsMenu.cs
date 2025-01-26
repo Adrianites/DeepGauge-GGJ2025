@@ -8,7 +8,7 @@ using TMPro;
 public class SettingsMenu : MonoBehaviour
 {
     public TMP_Dropdown graphicsDropdown, windowDropdown;
-    public Slider MasterVolumeSlider, MusicVolumeSlider, SFXVolumeSlider;
+    public Slider MasterVolumeSlider, MusicVolumeSlider, SFXVolumeSlider, AmbienceVolumeSlider;
     public AudioMixer audioMixer;
 
 
@@ -46,5 +46,10 @@ public class SettingsMenu : MonoBehaviour
     public void ChangeMusicVolume()
     {
         audioMixer.SetFloat("Music", MusicVolumeSlider.value);
+    }
+
+    public void ChangeAmbienceVolume()
+    {
+        audioMixer.SetFloat("Ambience", AmbienceVolumeSlider.value);
     }
 }
