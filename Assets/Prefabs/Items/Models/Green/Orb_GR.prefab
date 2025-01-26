@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Orb_GR
-  groupID: 0
+  groupID: 2
   isPickedUp: 0
 --- !u!65 &-4716954397209178037
 BoxCollider:
