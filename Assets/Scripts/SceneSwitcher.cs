@@ -9,7 +9,7 @@ public class SceneSwitcher : MonoBehaviour
         MainMenu,
         Level1,
         Level2,
-        Submarine,
+        Level3,
         End
     }
 
@@ -26,8 +26,8 @@ public class SceneSwitcher : MonoBehaviour
             case Scene.Level2:
                 SceneManager.LoadScene("Level2");
                 break;
-            case Scene.Submarine:
-                SceneManager.LoadScene("Submarine");
+            case Scene.Level3:
+                SceneManager.LoadScene("Level3");
                 break;
             case Scene.End:
                 SceneManager.LoadScene("End");
