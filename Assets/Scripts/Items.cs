@@ -7,17 +7,35 @@ public class Items : MonoBehaviour
     public string itemName;
     public int groupID; // The group the item belongs to (if you're using groups)
     public bool isPickedUp = false;
+    private AudioSource audioSource;
 
-    // This method handles the pickup of the item
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && !isPickedUp)
+        {
+            isPickedUp = true;
+            Debug.Log("Player picked up the item.");
+            PickUp();
+        }
+    }
+
     public void PickUp()
     {
-        // If you want to do something when the item is picked up, like play an animation or sound
         isPickedUp = true;
-
-        // Optionally disable the item visually
-        gameObject.SetActive(false);
-
-        // Handle winning conditions in the GameManager
+        audioSource.Play();
         GameManager.Instance.AddItemToInventory(this);
+        StartCoroutine(DestroyAfterSound());
+
+    }
+    
+    private IEnumerator DestroyAfterSound()
+    {
+        yield return new WaitForSeconds(audioSource.clip.length);
+        Destroy(gameObject);
     }
 }

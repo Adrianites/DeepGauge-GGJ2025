@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class OxygenManager : MonoBehaviour
 {
-    public Slider o2Bar; // Reference to the UI Slider component for the O2 bar
-    public Image fadeImage; // Reference to the UI Image component for the screen fade
-    public ParticleSystem bubblesParticleSystem; // Reference to the Particle System for the bubbles
-    public AudioClip bubblesAudioClip; // Audio clip to play when bubbles appear
-    public float maxOxygen = 100f; // Maximum oxygen level
-    public float oxygenDepletionRate = 1f; // Rate at which oxygen depletes per second
-    public float fadeDuration = 5f; // Duration for the screen to fade to black
-    public float bubblesDelay = 10f; // Time before bubbles first appear
-    public float bubblesDuration = 2f; // Duration for which bubbles are visible
-    public float bubblesInterval = 5f; // Interval between bubble appearances
+    public Slider o2Bar;
+    public Image fadeImage;
+    public GameObject bubblesParticleSystem;
+    public float maxOxygen = 100f;
+    public float oxygenDepletionRate = 1f;
+    public float fadeDuration = 5f;
+    public float secondsPerBubble = 2f;
+
+    public GameObject deathUI;
+    public GameObject inGameUI;
+
+    public UnityEvent OnPlayerDeath;
 
     private float currentOxygen;
     private bool isFading = false;
@@ -22,56 +25,67 @@ public class OxygenManager : MonoBehaviour
     private bool bubblesShown = false;
     private AudioSource audioSource;
 
+    public static OxygenManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         currentOxygen = maxOxygen;
         o2Bar.maxValue = maxOxygen;
         o2Bar.value = currentOxygen;
-        fadeImage.color = new Color(0, 0, 0, 0); // Ensure the fade image is initially transparent
+        fadeImage.color = new Color(0, 0, 0, 0);
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (OnPlayerDeath == null)
+        {
+            OnPlayerDeath = new UnityEvent();
+        }
+
+        if (bubblesParticleSystem != null)
+        {
+            bubblesParticleSystem.SetActive(false);
+        }
     }
 
     private void Update()
     {
         if (!isFading)
         {
-            // Deplete oxygen over time
             currentOxygen -= oxygenDepletionRate * Time.deltaTime;
             o2Bar.value = currentOxygen;
 
-            // Check if oxygen has reached zero
             if (currentOxygen <= 0)
             {
                 StartFade();
             }
 
-            // Handle bubbles appearance
             bubblesTimer += Time.deltaTime;
-            if (bubblesTimer >= bubblesDelay && !bubblesShown)
+            if (bubblesTimer >= secondsPerBubble)
             {
-                ShowBubbles();
-            }
-            else if (bubblesShown && bubblesTimer >= bubblesDelay + bubblesDuration)
-            {
-                HideBubbles();
-            }
-            else if (!bubblesShown && bubblesTimer >= bubblesDelay + bubblesDuration + bubblesInterval)
-            {
-                bubblesTimer = 0f; // Reset the timer to show bubbles again
+                ToggleBubbles();
+                bubblesTimer = 0f;
             }
         }
         else
         {
-            // Handle screen fading
             fadeTimer += Time.deltaTime;
             float alpha = Mathf.Clamp01(fadeTimer / fadeDuration);
             fadeImage.color = new Color(0, 0, 0, alpha);
 
-            // Optionally, you can reload the scene or handle game over logic here
             if (alpha >= 1)
             {
-                // Reload the scene or handle game over
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                OnFadeComplete();
             }
         }
     }
@@ -82,20 +96,47 @@ public class OxygenManager : MonoBehaviour
         fadeTimer = 0f;
     }
 
-    private void ShowBubbles()
+    private void OnFadeComplete()
     {
-        Debug.Log("Showing bubbles");
-        bubblesShown = true;
-        bubblesParticleSystem.Play(); // Play the particle system
-        audioSource.clip = bubblesAudioClip;
-        audioSource.Play();
+        if (deathUI != null)
+        {
+            deathUI.SetActive(true);
+        }
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(false);
+        }
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
+        OnPlayerDeath?.Invoke();
     }
 
-    private void HideBubbles()
+    private void ToggleBubbles()
     {
-        Debug.Log("Hiding bubbles");
-        bubblesShown = false;
-        bubblesParticleSystem.Stop(); // Stop the particle system
-        audioSource.Stop(); // Stop the audio
+        bubblesShown = !bubblesShown;
+        if (bubblesParticleSystem != null)
+        {
+            bubblesParticleSystem.SetActive(bubblesShown);
+        }
+        if (audioSource != null)
+        {
+            if (bubblesShown)
+            {
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    public void RecoverOxygen(float amount)
+    {
+        currentOxygen = Mathf.Clamp(currentOxygen + amount, 0, maxOxygen);
+        o2Bar.value = currentOxygen;
     }
 }

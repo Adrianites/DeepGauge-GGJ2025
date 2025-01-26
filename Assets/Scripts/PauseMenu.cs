@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     public bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject InGameUI;
+    public OxygenManager oxygenManager; 
+    public bool isDead = false;
 
     void Start()
     {   
@@ -16,11 +18,20 @@ public class PauseMenu : MonoBehaviour
         InGameUI.SetActive(true);
 
         Time.timeScale = 1f;
+
+        if (oxygenManager != null)
+        {
+            oxygenManager.OnPlayerDeath.AddListener(HandlePlayerDeath);
+        }
     }
 
     public void Pause()
     {
-        if (GameIsPaused)
+        if (isDead)
+        {
+            return;
+        }
+        else if (GameIsPaused)
         {
             Play();
         }
@@ -57,8 +68,12 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void Escapelulululululuulluluullul()
+    private void HandlePlayerDeath()
     {
+        isDead = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         
+        Time.timeScale = 0f;
     }
 }
