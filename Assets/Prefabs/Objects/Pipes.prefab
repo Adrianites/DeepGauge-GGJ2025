@@ -620,9 +620,10 @@ MonoBehaviour:
   rotationSpeed: 100
   particleEffect: {fileID: 0}
   valveLight: {fileID: 0}
-  inactiveColor: {r: 1, g: 0, b: 0, a: 1}
-  activeColor: {r: 0, g: 1, b: 0, a: 1}
+  inactiveLightColour: {r: 1, g: 0, b: 0, a: 1}
+  activeLightColour: {r: 0, g: 1, b: 0, a: 1}
   interactionRange: 3
+  interactionSound: {fileID: 8300000, guid: 9771201509ce6df4f937bf034a7c1a1e, type: 3}
 --- !u!135 &1643571110146792168
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -87,6 +87,7 @@ MonoBehaviour:
   itemName: Dim_GR
   groupID: 1
   isPickedUp: 0
+  pickupSound: {fileID: 8300000, guid: 9771201509ce6df4f937bf034a7c1a1e, type: 3}
 --- !u!65 &3183476301459215324
 BoxCollider:
   m_ObjectHideFlags: 0

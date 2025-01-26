@@ -91,6 +91,7 @@ MonoBehaviour:
   itemName: Clam_GR
   groupID: 0
   isPickedUp: 0
+  pickupSound: {fileID: 8300000, guid: 9771201509ce6df4f937bf034a7c1a1e, type: 3}
 --- !u!65 &-3153352278667418183
 BoxCollider:
   m_ObjectHideFlags: 0

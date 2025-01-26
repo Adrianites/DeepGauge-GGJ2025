@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class OxygenManager : MonoBehaviour
 {
+    public static OxygenManager Instance; // Static instance for global access
+
     public Slider o2Bar; // Reference to the UI Slider component for the O2 bar
     public Image fadeImage; // Reference to the UI Image component for the screen fade
     public ParticleSystem bubblesParticleSystem; // Reference to the Particle System for the bubbles
@@ -14,6 +16,7 @@ public class OxygenManager : MonoBehaviour
     public float bubblesDelay = 10f; // Time before bubbles first appear
     public float bubblesDuration = 2f; // Duration for which bubbles are visible
     public float bubblesInterval = 5f; // Interval between bubble appearances
+    public float oxygenRecoveryAmount = 20f; // Amount of oxygen to recover when hitting a trigger
 
     private float currentOxygen;
     private bool isFading = false;
@@ -21,6 +24,19 @@ public class OxygenManager : MonoBehaviour
     private float bubblesTimer = 0f;
     private bool bubblesShown = false;
     private AudioSource audioSource;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Persist this GameObject across scene loads
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -97,5 +113,11 @@ public class OxygenManager : MonoBehaviour
         bubblesShown = false;
         bubblesParticleSystem.Stop(); // Stop the particle system
         audioSource.Stop(); // Stop the audio
+    }
+
+    public void RecoverOxygen(float amount)
+    {
+        currentOxygen = Mathf.Clamp(currentOxygen + amount, 0, maxOxygen);
+        o2Bar.value = currentOxygen;
     }
 }
