@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 1031093250}
   - component: {fileID: 1031093249}
   m_Layer: 0
-  m_Name: Temp Music
+  m_Name: Ambience
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,7 +566,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3617753557401528996, guid: 84037c580b6bdcd43ba53cfe2a8e5bde, type: 2}
-  m_audioClip: {fileID: 8300000, guid: e3e909822016de64fb2b0bbb2f73091c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d62c587fe9d966d42ad8ba7f9690fde3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

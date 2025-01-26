@@ -8,6 +8,7 @@ TagManager:
   - InGameUI
   - PauseMenuUI
   - SceneSwitcher
+  - Items
   layers:
   - Default
   - TransparentFX

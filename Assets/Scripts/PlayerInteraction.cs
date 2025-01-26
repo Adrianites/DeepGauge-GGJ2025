@@ -13,9 +13,13 @@ public class PlayerInteraction : MonoBehaviour
             currentValve = other.GetComponent<Valve>();
             currentValve.SetPlayer(transform);
         }
-        else if (sceneSwitcher)
+        else if (other.CompareTag("SceneSwitcher"))
         {
             sceneSwitcher.SwitchScene();
+        }
+        else if (other.CompareTag("Items"))
+        {
+            Debug.Log("Item");
         }
     }
 
@@ -25,9 +29,12 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentValve = null;
         }
-        else if (sceneSwitcher)
+        else if (other.CompareTag("SceneSwitcher"))
         {
             sceneSwitcher.SwitchScene();
+        }
+        else if (other.CompareTag("Items"))
+        {
         }
     }
 
