@@ -73,16 +73,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply rotation to the player
         rb.rotation = Quaternion.Euler(pitch, yaw, 0f);
-
-        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Items item = other.GetComponent<Items>();
-        if (item != null && !item.isPickedUp)
+        if (item != null)
         {
-            item.PickUp();
+            GameManager.Instance.AddItemToInventory(item);
+            Destroy(other.gameObject); // Destroy the item GameObject after collection
         }
     }
 }

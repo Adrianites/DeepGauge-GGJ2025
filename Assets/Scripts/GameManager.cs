@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     // Track how many items are needed to win (by group or total)
     public int totalItemsNeeded = 5;
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,11 +23,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddItemToInventory(Items items)
+    public void AddItemToInventory(Items item)
     {
-        if (!collectedItems.Contains(items))
+        if (!collectedItems.Contains(item))
         {
-            collectedItems.Add(items);
+            collectedItems.Add(item);
+            ScoreManager.Instance.AddScore(100); // Add 100 points for each item collected
         }
 
         // Check for win condition
