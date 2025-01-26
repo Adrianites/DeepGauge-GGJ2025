@@ -6,8 +6,6 @@
 ## Sounds
 [Relaxing Guitar Loop V5](https://pixabay.com/sound-effects/relaxing-guitar-loop-v5-245859/)
 [Scary Ambience 3](https://pixabay.com/sound-effects/tention-mounts-ticking-clock-loop-dread-63077/)
----
-## Obj
 [tention-mounts-ticking-clock-loop-dread](https://pixabay.com/sound-effects/tention-mounts-ticking-clock-loop-dread-63077/)
 [Heartbeat 02](https://pixabay.com/sound-effects/heartbeat-02-225103/)
 [Heartbeat 01](https://pixabay.com/sound-effects/heartbeat-01-brvhrtz-225058/)
@@ -24,5 +22,7 @@
 [Underwater Ambience](https://pixabay.com/sound-effects/underwater-ambiencewav-14428/)
 [Submarine](https://pixabay.com/sound-effects/submarine-289985/)
 [Bell](https://pixabay.com/sound-effects/075762-bell-ding-85406/)
+---
+## Obj
 [Squidward House](https://sketchfab.com/3d-models/squidwards-house-spongebob-cf183eb8ce0a4ba59c5de662580bb1de)
 [SpongeBob House](https://sketchfab.com/3d-models/spongebobs-house-6de3d56376c64371a8d350834b6c8f5a)
