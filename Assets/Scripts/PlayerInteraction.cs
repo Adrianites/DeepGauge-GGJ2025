@@ -24,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Valve"))
+        if (other.CompareTag("Valve") && other.GetComponent<Valve>() == currentValve)
         {
             currentValve = null;
         }

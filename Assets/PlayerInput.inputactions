@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "ce7625c2-5fef-46cd-99d0-29dabcaaaed6",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -150,7 +150,7 @@
                     "name": "Look",
                     "type": "Value",
                     "id": "bdea1f9e-000e-4eea-bea5-b47cfafd05f8",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

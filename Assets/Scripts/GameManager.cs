@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
         if (!collectedItems.Contains(item))
         {
             collectedItems.Add(item);
-            ScoreManager.Instance.AddScore(100); // Add 100 points for each item collected
+            if (ScoreManager.Instance != null)
+            {
+                ScoreManager.Instance.AddScore(100); // Add 100 points for each item collected
+            }
         }
 
         // Check for win condition

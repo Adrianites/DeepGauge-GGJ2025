@@ -29,9 +29,8 @@ public class SceneSwitcher : MonoBehaviour
 
     public void SwitchScene()
     {
-        // Save current score and oxygen levels
-        int currentScore = ScoreManager.Instance?.GetScore() ?? 0;
-        float currentOxygen = OxygenManager.Instance?.GetCurrentOxygen() ?? 100f;
+        // Save current score
+        int currentScore = ScoreManager.Instance != null ? ScoreManager.Instance.GetScore() : 0;
 
         // Switch scene
         switch (scene)
@@ -53,14 +52,10 @@ public class SceneSwitcher : MonoBehaviour
                 break;
         }
 
-        // Load saved score and oxygen levels
+        // Load saved score
         if (ScoreManager.Instance != null)
         {
             ScoreManager.Instance.SetScore(currentScore);
-        }
-        if (OxygenManager.Instance != null)
-        {
-            OxygenManager.Instance.SetCurrentOxygen(currentOxygen);
         }
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class OxygenManager : MonoBehaviour
@@ -20,25 +19,16 @@ public class OxygenManager : MonoBehaviour
 
     private float currentOxygen;
     private bool isFading = false;
+    private bool isDead = false;
     private float fadeTimer = 0f;
     private float bubblesTimer = 0f;
     private bool bubblesShown = false;
-    private AudioSource audioSource;
 
     public static OxygenManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist this object across scenes
-            SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to the sceneLoaded event
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
         Initialize();
     }
 
@@ -47,19 +37,48 @@ public class OxygenManager : MonoBehaviour
         DeathCanvasNbubbles();
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     private void Initialize()
     {
         Debug.Log("Initializing OxygenManager...");
 
-        o2Bar = GameObject.Find("O2Bar")?.GetComponent<Slider>();
-        fadeImage = GameObject.Find("FadeImage")?.GetComponent<Image>();
-        deathUI = GameObject.FindWithTag("DeathUI");
-        inGameUI = GameObject.Find("InGameCanvas");
-        bubblesParticleSystem = GameObject.FindWithTag("Bubbles");
+        if (o2Bar == null)
+        {
+            o2Bar = GameObject.Find("O2Bar")?.GetComponent<Slider>();
+        }
+        if (fadeImage == null)
+        {
+            fadeImage = GameObject.Find("FadeImage")?.GetComponent<Image>();
+        }
+        if (deathUI == null)
+        {
+            deathUI = GameObject.FindWithTag("DeathUI");
+        }
+        if (inGameUI == null)
+        {
+            inGameUI = GameObject.Find("InGameCanvas");
+        }
+        if (bubblesParticleSystem == null)
+        {
+            bubblesParticleSystem = GameObject.FindWithTag("Bubbles");
+        }
+
+        currentOxygen = maxOxygen;
+        isFading = false;
+        isDead = false;
+        fadeTimer = 0f;
+        bubblesTimer = 0f;
+        bubblesShown = false;
 
         if (o2Bar != null)
         {
-            currentOxygen = maxOxygen;
             o2Bar.maxValue = maxOxygen;
             o2Bar.value = currentOxygen;
             Debug.Log("O2Bar found and initialized.");
@@ -77,12 +96,6 @@ public class OxygenManager : MonoBehaviour
         else
         {
             Debug.LogError("FadeImage not found.");
-        }
-
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-            Debug.Log("AudioSource added.");
         }
 
         if (OnPlayerDeath == null)
@@ -134,29 +147,16 @@ public class OxygenManager : MonoBehaviour
         }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log($"Scene loaded: {scene.name}");
-        Initialize(); // Reinitialize references when a new scene is loaded
-
-        // Adjust oxygen depletion rate based on the scene
-        if (scene.name == "Level2" || scene.name == "Level3")
-        {
-            oxygenDepletionRate = 1f;
-            Debug.Log("Oxygen depletion rate set to 1 for Level2 or Level3.");
-        }
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe from the sceneLoaded event
-    }
-
     private void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (!isFading)
         {
-            currentOxygen -= oxygenDepletionRate * Time.deltaTime;
+            currentOxygen = Mathf.Max(currentOxygen - oxygenDepletionRate * Time.deltaTime, 0f);
             if (o2Bar != null)
             {
                 o2Bar.value = currentOxygen;
@@ -196,8 +196,20 @@ public class OxygenManager : MonoBehaviour
         fadeTimer = 0f;
     }
 
+    private void StopFade()
+    {
+        isFading = false;
+        fadeTimer = 0f;
+        if (fadeImage != null)
+        {
+            fadeImage.color = new Color(0, 0, 0, 0);
+        }
+    }
+
     private void OnFadeComplete()
     {
+        isDead = true;
+
         if (deathUI != null)
         {
             deathUI.SetActive(true);
@@ -206,6 +218,11 @@ public class OxygenManager : MonoBehaviour
         if (inGameUI != null)
         {
             inGameUI.SetActive(false);
+        }
+
+        if (bubblesParticleSystem != null)
+        {
+            bubblesParticleSystem.SetActive(false);
         }
 
         Cursor.lockState = CursorLockMode.Confined;
@@ -221,25 +238,24 @@ public class OxygenManager : MonoBehaviour
         {
             bubblesParticleSystem.SetActive(bubblesShown);
         }
-        if (audioSource != null)
-        {
-            if (bubblesShown)
-            {
-                audioSource.Play();
-            }
-            else
-            {
-                audioSource.Stop();
-            }
-        }
     }
 
     public void RecoverOxygen(float amount)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         currentOxygen = Mathf.Clamp(currentOxygen + amount, 0, maxOxygen);
         if (o2Bar != null)
         {
             o2Bar.value = currentOxygen;
+        }
+
+        if (isFading && currentOxygen > 0)
+        {
+            StopFade();
         }
     }
 

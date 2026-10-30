@@ -18,7 +18,6 @@ public class Items : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isPickedUp)
         {
-            isPickedUp = true;
             Debug.Log("Player picked up the item.");
             PickUp();
         }
@@ -27,15 +26,29 @@ public class Items : MonoBehaviour
     public void PickUp()
     {
         isPickedUp = true;
-        audioSource.Play();
-        GameManager.Instance.AddItemToInventory(this);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddItemToInventory(this);
+        }
         StartCoroutine(DestroyAfterSound());
-
     }
-    
+
     private IEnumerator DestroyAfterSound()
     {
-        yield return new WaitForSeconds(audioSource.clip.length);
+        foreach (Renderer itemRenderer in GetComponentsInChildren<Renderer>())
+        {
+            itemRenderer.enabled = false;
+        }
+        foreach (Collider itemCollider in GetComponentsInChildren<Collider>())
+        {
+            itemCollider.enabled = false;
+        }
+
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play();
+            yield return new WaitForSeconds(audioSource.clip.length);
+        }
         Destroy(gameObject);
     }
 }

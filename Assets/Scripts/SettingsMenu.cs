@@ -11,6 +11,36 @@ public class SettingsMenu : MonoBehaviour
     public Slider MasterVolumeSlider, MusicVolumeSlider, SFXVolumeSlider, AmbienceVolumeSlider;
     public AudioMixer audioMixer;
 
+    private void OnEnable()
+    {
+        graphicsDropdown.SetValueWithoutNotify(QualitySettings.GetQualityLevel());
+
+        switch (Screen.fullScreenMode)
+        {
+            case FullScreenMode.Windowed:
+                windowDropdown.SetValueWithoutNotify(0);
+                break;
+            case FullScreenMode.ExclusiveFullScreen:
+                windowDropdown.SetValueWithoutNotify(2);
+                break;
+            default:
+                windowDropdown.SetValueWithoutNotify(1);
+                break;
+        }
+
+        ShowMixerVolume(MasterVolumeSlider, "Master");
+        ShowMixerVolume(SFXVolumeSlider, "SFX");
+        ShowMixerVolume(MusicVolumeSlider, "Music");
+        ShowMixerVolume(AmbienceVolumeSlider, "Ambience");
+    }
+
+    private void ShowMixerVolume(Slider slider, string parameter)
+    {
+        if (audioMixer.GetFloat(parameter, out float volume))
+        {
+            slider.SetValueWithoutNotify(volume);
+        }
+    }
 
     public void SetGraphicsQuality()
     {
@@ -19,16 +49,19 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetWindowMode()
     {
+        int monitorWidth = Display.main.systemWidth;
+        int monitorHeight = Display.main.systemHeight;
+
         switch (windowDropdown.value)
         {
             case 0:
-                Screen.fullScreenMode = FullScreenMode.Windowed;
+                Screen.SetResolution(Mathf.Min(1280, monitorWidth), Mathf.Min(720, monitorHeight), FullScreenMode.Windowed);
                 break;
             case 1:
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                Screen.SetResolution(monitorWidth, monitorHeight, FullScreenMode.FullScreenWindow);
                 break;
             case 2:
-                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+                Screen.SetResolution(monitorWidth, monitorHeight, FullScreenMode.ExclusiveFullScreen);
                 break;
         }
     }

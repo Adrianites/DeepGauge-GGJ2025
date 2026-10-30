@@ -12,6 +12,11 @@ public class MainMenu : MonoBehaviour
     
     public void PlayGame()
     {
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.SetScore(0);
+        }
+
         SceneManager.LoadScene("Level1");
     }
 
